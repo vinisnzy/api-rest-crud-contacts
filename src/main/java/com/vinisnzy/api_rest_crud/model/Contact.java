@@ -1,5 +1,6 @@
 package com.vinisnzy.api_rest_crud.model;
 
+import com.vinisnzy.api_rest_crud.dto.ContactRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Contact {
+
+    public Contact(ContactRequestDTO data) {
+        this.phone = data.phone();
+        this.name = data.name();
+        this.lastName = data.lastName();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
