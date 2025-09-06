@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface ContactRepository extends JpaRepository<Contact, Long> {
     Optional<Contact> findByPhone(String phone);
-    Optional<Contact> findByName(String name);
-    Optional<Contact> findByLastName(String lastName);
+    Optional<Contact> findByNameIgnoreCase(String name);
+    Optional<Contact> findByLastNameIgnoreCase(String lastName);
 }
