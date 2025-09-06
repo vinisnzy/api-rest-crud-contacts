@@ -34,4 +34,16 @@ public class Contact {
     @Column(nullable = false)
     private String lastName;
 
+    public void updateData(ContactRequestDTO data) {
+        if (data.phone() != null) {
+            this.phone = data.phone();
+        }
+        if (data.name() != null) {
+            this.name = data.name();
+        }
+        if (data.lastName() != null) {
+            this.lastName = data.lastName();
+        }
+    }
+
 }
