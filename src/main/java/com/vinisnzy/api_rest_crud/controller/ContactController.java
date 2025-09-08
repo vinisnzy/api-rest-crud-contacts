@@ -3,6 +3,7 @@ package com.vinisnzy.api_rest_crud.controller;
 import com.vinisnzy.api_rest_crud.dto.ContactRequestDTO;
 import com.vinisnzy.api_rest_crud.dto.ContactResponseDTO;
 import com.vinisnzy.api_rest_crud.service.ContactService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class ContactController {
     private final ContactService service;
 
     @PostMapping
-    public ResponseEntity<ContactResponseDTO> createContact(@RequestBody ContactRequestDTO data) {
+    public ResponseEntity<ContactResponseDTO> createContact(@Valid @RequestBody ContactRequestDTO data) {
         ContactResponseDTO contact = service.createContact(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(contact);
     }
@@ -49,7 +50,7 @@ public class ContactController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContactResponseDTO> updateContact(@PathVariable Long id, @RequestBody ContactRequestDTO data) {
+    public ResponseEntity<ContactResponseDTO> updateContact(@PathVariable Long id, @Valid @RequestBody ContactRequestDTO data) {
         return ResponseEntity.ok().body(service.updateContact(id, data));
     }
 
