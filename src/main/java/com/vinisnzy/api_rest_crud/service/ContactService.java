@@ -2,6 +2,7 @@ package com.vinisnzy.api_rest_crud.service;
 
 import com.vinisnzy.api_rest_crud.dto.ContactRequestDTO;
 import com.vinisnzy.api_rest_crud.dto.ContactResponseDTO;
+import com.vinisnzy.api_rest_crud.exceptions.ResourceNotFoundException;
 import com.vinisnzy.api_rest_crud.model.Contact;
 import com.vinisnzy.api_rest_crud.repository.ContactRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,17 +31,17 @@ public class ContactService {
     }
 
     public ContactResponseDTO getContactByPhone(String phone) {
-        Contact contact = repository.findByPhone(phone).orElseThrow(() -> new RuntimeException("Contact not found with phone: " + phone));
+        Contact contact = repository.findByPhone(phone).orElseThrow(() -> new ResourceNotFoundException("Contact not found with phone: " + phone));
         return new ContactResponseDTO(contact);
     }
 
     public ContactResponseDTO getContactByName(String name) {
-        Contact contact = repository.findByNameIgnoreCase(name).orElseThrow(() -> new RuntimeException("Contact not found with name: " + name));
+        Contact contact = repository.findByNameIgnoreCase(name).orElseThrow(() -> new ResourceNotFoundException("Contact not found with name: " + name));
         return new ContactResponseDTO(contact);
     }
 
     public ContactResponseDTO getContactByLastName(String lastName) {
-        Contact contact = repository.findByLastNameIgnoreCase(lastName).orElseThrow(() -> new RuntimeException("Contact not found with last name: " + lastName));
+        Contact contact = repository.findByLastNameIgnoreCase(lastName).orElseThrow(() -> new ResourceNotFoundException("Contact not found with last name: " + lastName));
         return new ContactResponseDTO(contact);
     }
 
@@ -57,6 +58,6 @@ public class ContactService {
     }
 
     private Contact findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Contact not found with id: " + id));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + id));
     }
 }

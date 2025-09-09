@@ -5,6 +5,7 @@ import com.vinisnzy.api_rest_crud.dto.LoginRequestDTO;
 import com.vinisnzy.api_rest_crud.dto.RegisterRequestDTO;
 import com.vinisnzy.api_rest_crud.dto.TokenResponseDTO;
 import com.vinisnzy.api_rest_crud.enums.RoleName;
+import com.vinisnzy.api_rest_crud.exceptions.EmailAlreadyExistsException;
 import com.vinisnzy.api_rest_crud.model.User;
 import com.vinisnzy.api_rest_crud.repository.UserRepository;
 import com.vinisnzy.api_rest_crud.security.JwtTokenService;
@@ -16,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +34,10 @@ public class AuthService {
     private final SecurityConfig securityConfig;
 
     public void register(RegisterRequestDTO data) {
+        Optional<User> existingUser = repository.findByEmail(data.email());
+        if (existingUser.isPresent()) {
+            throw new EmailAlreadyExistsException("User with this email already exists");
+        }
         User user = User.builder()
                 .email(data.email())
                 .password(securityConfig.passwordEncoder().encode(data.password()))

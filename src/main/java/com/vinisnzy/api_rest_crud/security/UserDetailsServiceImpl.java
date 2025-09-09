@@ -1,5 +1,6 @@
 package com.vinisnzy.api_rest_crud.security;
 
+import com.vinisnzy.api_rest_crud.exceptions.ResourceNotFoundException;
 import com.vinisnzy.api_rest_crud.model.User;
 import com.vinisnzy.api_rest_crud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repository.findByEmail(username).orElseThrow(
-                () -> new RuntimeException("User not found with email: " + username)
+                () -> new ResourceNotFoundException("User not found with email: " + username)
         );
         return new UserDetailsImpl(user);
     }
